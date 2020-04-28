@@ -2,10 +2,17 @@ version: '3.7'
 services:
   gitLab:
     image: gitlab/gitlab-ce:latest
+    hostname: localhost
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://localhost'
+        gitlab_rails['gitlab_shell_ssh_port'] = 8822
     ports:
      - "8888:80"
+     - "8822:22"
     volumes:
      - './srv/gitlab/config:/etc/gitlab'
      - './srv/gitlab/logs:/var/log/gitlab'
      - './srv/gitlab/data:/var/opt/gitlab'
+    restart: unless-stopped
 
